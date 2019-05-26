@@ -30,6 +30,7 @@ using NLog;
 namespace Czar.Cms.Admin
 {
     public class Startup
+        //: IStartup//可以不需要
     {
         private readonly Logger logger = LogManager.GetCurrentClassLogger();
         public Startup(IConfiguration configuration, IHostingEnvironment env)
@@ -168,5 +169,10 @@ namespace Czar.Cms.Admin
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+        //public void Configure(IApplicationBuilder app)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

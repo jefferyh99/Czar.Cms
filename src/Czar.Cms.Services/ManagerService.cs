@@ -54,7 +54,7 @@ namespace Czar.Cms.Services
                 manager.AddManagerId = 1;
                 manager.IsDelete = false;
                 manager.AddTime = DateTime.Now;
-                if ( await _repository.InsertAsync(manager) > 0)
+                if (await _repository.InsertAsync(manager) > 0)
                 {
                     result.ResultCode = ResultCodeAddMsgKeys.CommonObjectSuccessCode;
                     result.ResultMsg = ResultCodeAddMsgKeys.CommonObjectSuccessMsg;
@@ -184,6 +184,7 @@ namespace Czar.Cms.Services
             model.UserName = model.UserName.Trim();
             string conditions = $"select * from {nameof(Manager)} where IsDelete=0 ";//未删除的
             conditions += $"and (UserName = @UserName or Mobile =@UserName or Email =@UserName) and Password=@Password";
+           
             var manager = await _repository.GetAsync(conditions, model);
             if (manager != null)
             {
@@ -191,7 +192,7 @@ namespace Czar.Cms.Services
                 manager.LoginCount += 1;
                 manager.LoginLastTime = DateTime.Now;
                 _repository.Update(manager);
-               await _managerLogRepository.InsertAsync(new ManagerLog()
+                await _managerLogRepository.InsertAsync(new ManagerLog()
                 {
                     ActionType = CzarCmsEnums.ActionEnum.SignIn.ToString(),
                     AddManageId = manager.Id,
